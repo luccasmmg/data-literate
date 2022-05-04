@@ -21,6 +21,8 @@ export default function Table({ data=[], cols=[], csv='', url='' }) {
 	const [error, setError] = React.useState('')
 
   useEffect(() => {
+    setData(data)
+    setCols(cols)
     if (url) {
       loadUrl(url)
     }
