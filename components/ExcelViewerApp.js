@@ -68,21 +68,27 @@ function SheetJSApp() {
         <UrlInput handleUrl={handleUrl} />
       </div>
       <div className="row">
-		  {sheetNames.length > 1 &&
-        <Tab.Group>
-          <Tab.List>
-			<div className="grid grid-cols-3 gap-2">
-            {sheetNames.map((sheetName) => (
-              <Tab>{sheetName}</Tab>
-            ))}</div>
-          </Tab.List>
-          <Tab.Panels>
-            {data.map((data, index) => (
-              <Tab.Panel><OutTable data={data} cols={cols[index]} /></Tab.Panel>
-            ))}
-          </Tab.Panels>
-        </Tab.Group>}
-		{ sheetNames.length === 1 && <OutTable data={data[0]} cols={cols[0]} />}
+        {sheetNames.length > 1 && (
+          <Tab.Group>
+            <Tab.List>
+              <div className="grid grid-cols-3 border">
+                {sheetNames.map((sheetName) => (
+                  <Tab className="border">
+                    <span className="text-xs">{sheetName}</span>
+                  </Tab>
+                ))}
+              </div>
+            </Tab.List>
+            <Tab.Panels>
+              {data.map((data, index) => (
+                <Tab.Panel>
+                  <OutTable data={data} cols={cols[index]} />
+                </Tab.Panel>
+              ))}
+            </Tab.Panels>
+          </Tab.Group>
+        )}
+        {sheetNames.length === 1 && <OutTable data={data[0]} cols={cols[0]} />}
       </div>
     </div>
   );
@@ -182,28 +188,34 @@ function DataInput({ handleFile }) {
 */
 function OutTable({ data, cols }) {
   return (
-	  <>
-	  { (data && cols) &&
-    <div className="table-responsive overflow-x-auto">
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            {cols.map((c) => (
-              <th key={c.key}>{c.name}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((r, i) => (
-            <tr key={i}>
-              {cols.map((c) => (
-                <td key={c.key}>{r[c.key]}</td>
+    <>
+      {data && cols && (
+        <div className="mt-[-1.85em] table-responsive overflow-x-auto">
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                {cols.map((c) => (
+                  <th className="border" key={c.key}>
+                    {c.name}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((r, i) => (
+                <tr key={i}>
+                  {cols.map((c) => (
+                    <td className="border" key={c.key}>
+                      {r[c.key]}
+                    </td>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>}</>
+            </tbody>
+          </table>
+        </div>
+      )}
+    </>
   );
 }
 
